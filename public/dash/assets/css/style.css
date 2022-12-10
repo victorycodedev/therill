@@ -1,0 +1,33 @@
+/*================================================================================
+	Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
+	Version: 2.0
+	Author: PIXINVENT
+	Author URL: http://www.themeforest.net/user/pixinvent
+================================================================================
+
+NOTE:
+------
+PLACE HERE YOUR OWN SCSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER STYLESHEETS.
+WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
+
+.bage-left {
+    left: -7px!important;
+}
+
+.sel {
+    position: relative;
+}
+
+.sel .sello {
+    position: absolute;
+    right: 10px;
+    width: 200px;
+}
+
+@media (max-width: 576px) {
+    .sel .sello {
+        position: absolute;
+        left: 55px;
+        width: 200px;
+    }
+}
