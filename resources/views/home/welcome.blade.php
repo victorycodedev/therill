@@ -122,6 +122,14 @@
                                     <span
                                         class="product-price">{{ $settings->currency }}{{ number_format($feat->current_price) }}</span>
                                 </div>
+                                <div>
+                                    {{-- <p>
+                                        {{ mb_strimwidth($feat->info, 0, 50, '...') }}
+                                    </p> --}}
+                                    <p>
+                                        {{ $feat->info }}
+                                    </p>
+                                </div>
                                 <!-- End .price-box -->
                                 <div class="product-action">
                                     @auth
@@ -181,7 +189,14 @@
                                     <a
                                         href="{{ route('productsingle', str_replace(' ', '-', $arrive->name)) }}">{{ $arrive->name }}</a>
                                 </h5>
-
+                                <div>
+                                    {{-- <p>
+                                        {{ mb_strimwidth($arrive->info, 0, 50, '...') }}
+                                    </p> --}}
+                                    <p>
+                                        {{ $arrive->info }}
+                                    </p>
+                                </div>
                                 <!-- End .product-container -->
                                 <div class="price-box">
                                     <del

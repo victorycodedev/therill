@@ -193,6 +193,7 @@ class ProductsController extends Controller
         $product->current_price = $request['current_price'];
         $product->previous_price = $request->previous_price;
         $product->sku = $request->sku;
+        $product->info = $request->info;
         $product->status = $request->status;
         $product->instock = $request['instock'];
         $product->videolink = $request['videolink'];
@@ -246,6 +247,7 @@ class ProductsController extends Controller
                 'previous_price' => $request->previous_price,
                 'sku' => $request->sku,
                 'status' => $request->status,
+                'info' => $request->info,
                 'instock' => $request['instock'],
                 'videolink' => $request['videolink'],
                 'description' => $request['description'],

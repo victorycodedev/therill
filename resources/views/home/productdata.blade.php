@@ -35,7 +35,14 @@
                             class="product-price">{{ $settings->currency }}{{ number_format($feat->current_price) }}</span>
                     </div>
                     <!-- End .price-box -->
-
+                    <div>
+                        {{-- <p>
+                            {{ mb_strimwidth($arrive->info, 0, 50, '...') }}
+                        </p> --}}
+                        <p>
+                            {{ $feat->info }}
+                        </p>
+                    </div>
                     <div class="product-action">
                         @auth
                             <a href="javascript:void(0)" class="btn-icon-wish" onclick="addtowish(this.id)"

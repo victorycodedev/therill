@@ -86,6 +86,7 @@ class AdvertController extends Controller
             'description' => $request->description,
         ]);
 
+
         return redirect()->back()->with('success', 'Advert Updated Successfully');
     }
 }

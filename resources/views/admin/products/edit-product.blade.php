@@ -194,10 +194,16 @@
                                         <img src="{{ asset('storage/' . $product->featured_image) }}" alt=""
                                             class="w-50">
                                     </div>
-                                    <div class="mt-2 form-group col-md-12">
+                                    <div class="mt-2 form-group col-md-6">
                                         <label for="">Product Name<span class="text-danger">*</span></label>
                                         <input type="text" value="{{ $product->name }}" name="name"
                                             class="shadow-sm form-control" required>
+                                    </div>
+                                    <div class="mt-2 form-group col-md-6">
+                                        <label for="">Short Info<span class="text-danger">*</span></label>
+                                        <input type="text" value="{{ $product->info }}" name="info"
+                                            class="shadow-sm form-control" required>
+                                        <small>Brief Information about this product.</small>
                                     </div>
                                     <div class="mt-2 form-group col-md-6">
                                         <label for="">Product Category<span class="text-danger">*</span></label>
@@ -299,7 +305,7 @@
 
                                     <div class="mt-2 form-group col-md-12">
                                         <label for="">Description</label>
-                                        <textarea name="description" id="mytextarea" rows="5" class="ckeditor shadow-sm form-control">{{ $product->description }}</textarea>
+                                        <textarea name="description" id="mytextarea" rows="5" class="shadow-sm ckeditor form-control">{{ $product->description }}</textarea>
                                     </div>
                                     <div class="form-group col-md-12">
                                         <button type="submit" class="shadow-sm btn btn-primary form-control">Save Product
