@@ -1,13 +1,13 @@
-@extends('layouts.app') 
-@section('title', 'Admin Dashboard') 
+@extends('layouts.app')
+@section('title', 'Admin Dashboard')
 @section('styles')
-@parent
- <!-- BEGIN: Vendor CSS-->
- <link rel="stylesheet" type="text/css" href="{{asset('dash/app-assets/vendors/css/vendors.min.css')}}">
- <link rel="stylesheet" type="text/css" href="{{asset('dash/app-assets/vendors/css/charts/apexcharts.css')}}">
- <link rel="stylesheet" type="text/css" href="{{asset('dash/app-assets/vendors/css/extensions/toastr.min.css')}}">
- <!-- END: Vendor CSS-->
-    
+    @parent
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('dash/app-assets/vendors/css/vendors.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('dash/app-assets/vendors/css/charts/apexcharts.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('dash/app-assets/vendors/css/extensions/toastr.min.css') }}">
+    <!-- END: Vendor CSS-->
+
 @endsection
 @include('admin.topmenu')
 @include('admin.sidebar')
@@ -35,8 +35,8 @@
                 </div>
             </div>
             <div class="content-body">
-                <x-success-message/>
-                <x-error-message/>
+                <x-success-message />
+                <x-error-message />
                 <div class="p-2 p-md-4 card">
                     <div class="row">
                         <div class="col-md-12">
@@ -47,7 +47,7 @@
                     </div>
                     <div class="row">
                         <div class="mt-5 col-md-8 offset-md-2">
-                            <img src="{{asset('storage/photos/'. $proof->proof)}}" alt="" class="w-100">
+                            <img src="{{ asset('storage/' . $proof->proof) }}" alt="" class="w-100">
                         </div>
                     </div>
                 </div>
@@ -60,7 +60,7 @@
 @endsection
 @section('scripts')
     @parent
-      <!-- BEGIN: Page JS-->
-      <script src="{{asset('dash/app-assets/js/scripts/pages/dashboard-ecommerce.min.js')}}"></script>
-      <!-- END: Page JS-->
+    <!-- BEGIN: Page JS-->
+    <script src="{{ asset('dash/app-assets/js/scripts/pages/dashboard-ecommerce.min.js') }}"></script>
+    <!-- END: Page JS-->
 @endsection

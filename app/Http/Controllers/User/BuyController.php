@@ -32,24 +32,32 @@ class BuyController extends Controller
     {
         $settings = Settings::where('id', 1)->first();
 
+        $myadd = ShippingAddress::where('user_id',  Auth::user()->id)->first();
+
+        if (empty($myadd->street) or empty($myadd->city) or empty($myadd->state)) {
+            return redirect()->back()->with('message', "Please Setup Your Shipping Address");
+        }
+
+        $options = $settings->payment_mode;
+        $optarray = json_decode($options);
+
+        if (!in_array('payondelivery', $optarray) and $request->payment_method == 'Pay on Delivery') {
+            return redirect()->back()->with('message', "Please choose a payment method");
+        }
+
+        if ($request->payment_method == 'Paystack') {
+            return redirect()->back()->with('message', "Please click on pay with debit card");
+        }
+
         if ($request->hasfile('proof')) {
             $this->validate($request, [
                 'proof' => 'image|mimes:jpg,jpeg,png|max:500',
             ]);
             $file = $request->file('proof');
-            $name = $file->getClientOriginalName();
-
-            $proofname = 'proof' . time() . $name;
             // save to storage/app/uploads as the new $filename
-            $path = $file->storeAs('public/photos', $proofname);
+            $proofname = $file->store('photos', 'public');
         } else {
             $proofname = NULL;
-        }
-
-        $myadd = ShippingAddress::where('user_id',  Auth::user()->id)->first();
-
-        if (empty($myadd->street) or empty($myadd->city) or empty($myadd->state)) {
-            return redirect()->back()->with('message', "Please Setup Your Shipping Address");
         }
 
         $order = new Orders();
@@ -70,9 +78,11 @@ class BuyController extends Controller
         ]);
 
         Mail::to(Auth::user()->email)->cc($settings->contact_email)->send(new OrderSuccess($order));
+        //Mail::to($settings->contact_email)->send(new OrderSuccess($order, true));
+
 
         $request->session()->forget(['quantity', 'product']);
-        return redirect()->route('user.dashboard')->with('success', 'Order Placed Successfully');
+        return redirect()->route('user.dashboard')->with('success', 'Order placed successfully, your order will be confirmed once we confirm your payment.');
     }
 
     public function deleteorder($id)
@@ -111,7 +121,7 @@ class BuyController extends Controller
         $order->info = NULL;
         $order->save();
 
-        //Mail::to(Auth::user()->email)->cc($settings->contact_email)->send(new OrderSuccess($order));
+        Mail::to(Auth::user()->email)->cc($settings->contact_email)->send(new OrderSuccess($order));
 
         $request->session()->forget(['quantity', 'product']);
         return redirect()->route('user.dashboard')->with('success', 'Order Placed Successfully');

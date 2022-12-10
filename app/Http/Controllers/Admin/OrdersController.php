@@ -17,33 +17,36 @@ class OrdersController extends Controller
 {
     //
 
-    public function fetchorders(){
-        return view('admin.Orders.order',[
-            'orders'=> Orders::with(['product', 'customer'])->orderByDesc('id')->get(),
+    public function fetchorders()
+    {
+        return view('admin.Orders.order', [
+            'orders' => Orders::with(['product', 'customer'])->orderByDesc('id')->get(),
         ]);
     }
 
-    public function address($id, $order){
+    public function address($id, $order)
+    {
         $user = User::find($id);
-        return view('admin.Orders.shippingaddress',[
-            'user'=>$user,
-            'order'=> Orders::where('id', $order)->first(),
-            'addres'=> ShippingAddress::where('user_id', $id)->first(),
+        return view('admin.Orders.shippingaddress', [
+            'user' => $user,
+            'order' => Orders::where('id', $order)->first(['info']),
+            'addres' => ShippingAddress::where('user_id', $id)->first(),
         ]);
     }
 
-    public function proof($id){
-        return view('admin.Orders.proof',[
-            'proof'=> Orders::where('id', $id)->first(),
+    public function proof($id)
+    {
+        return view('admin.Orders.proof', [
+            'proof' => Orders::where('id', $id)->first(['proof']),
         ]);
     }
 
-    public function deleteorder($id){
-
-        $path = "/public/photos/";
+    public function deleteorder($id)
+    {
         $order = Orders::where('id', $id)->first();
-        if(!empty($order->proof)){
-           Storage::delete($path.$order->proof); 
+
+        if (!empty($order->proof)) {
+            Storage::delete($order->proof);
         }
         Orders::where('id', $id)->delete();
 
@@ -52,8 +55,9 @@ class OrdersController extends Controller
 
 
 
-    public function changedelivery($id, $status){
-        
+    public function changedelivery($id, $status)
+    {
+
         $order = Orders::where('id', $id)->first();
         $user = User::where('id', $order->user_id)->first();
 
@@ -61,7 +65,6 @@ class OrdersController extends Controller
         $order->save();
 
         Mail::to($user->email)->send(new OrderStatus($order));
-
 
         return response()->json("Delivery Status changed to $status");
     }

@@ -44,16 +44,6 @@
                             aria-controls="order" aria-selected="true">Orders</a>
                     </li>
 
-                    {{-- <li class="nav-item">
-                    <a class="nav-link" id="download-tab" data-toggle="tab" href="#download" role="tab"
-                        aria-controls="download" aria-selected="false">Downloads</a>
-                </li> --}}
-
-                    {{-- <li class="nav-item">
-                    <a class="nav-link" id="address-tab" data-toggle="tab" href="#address" role="tab"
-                        aria-controls="address" aria-selected="false">Addresses</a>
-                </li> --}}
-
                     <li class="nav-item">
                         <a class="nav-link" id="edit-tab" data-toggle="tab" href="#edit" role="tab"
                             aria-controls="edit" aria-selected="false">Account
@@ -97,7 +87,7 @@
                             From your account dashboard you can view your
                             <a class="btn btn-link link-to-tab" href="#order">recent orders</a>,
                             manage your
-                            <a class="btn btn-link link-to-tab" href="#address">shipping and billing
+                            <a class="btn btn-link link-to-tab" href="#shipping">shipping and billing
                                 addresses</a>, and
                             <a class="btn btn-link link-to-tab" href="#edit">edit your password and account
                                 details.</a>
@@ -108,32 +98,14 @@
                         <div class="row row-lg">
                             <div class="col-6">
                                 <div class="pb-4 text-center feature-box">
-                                    <a href="#order" class="link-to-tab"><i class="sicon-social-dropbox"></i></a>
+                                    <a href="#order" class="link-to-tab">
+                                        <i class="sicon-social-dropbox"></i>
+                                    </a>
                                     <div class="feature-box-content">
                                         <h3>ORDERS</h3>
                                     </div>
                                 </div>
                             </div>
-
-                            {{-- <div class="col-6 col-md-4">
-                            <div class="pb-4 text-center feature-box">
-                                <a href="#download" class="link-to-tab"><i
-                                        class="sicon-cloud-download"></i></a>
-                                <div class=" feature-box-content">
-                                    <h3>DOWNLOADS</h3>
-                                </div>
-                            </div>
-                        </div> --}}
-
-                            {{-- <div class="col-6">
-                            <div class="pb-4 text-center feature-box">
-                                <a href="#address" class="link-to-tab"><i
-                                        class="sicon-location-pin"></i></a>
-                                <div class="feature-box-content">
-                                    <h3>ADDRESSES</h3>
-                                </div>
-                            </div>
-                        </div> --}}
 
                             <div class="col-6">
                                 <div class="pb-4 text-center feature-box">

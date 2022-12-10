@@ -63,11 +63,12 @@ class HomeController extends Controller
         }
 
         $total = $amount + $shipping;
-        //$btcusdprice = Http::get('https://api.cryptonator.com/api/ticker/btc-usd')['ticker']['price'];
+        // $btcusdprice = Http::get('https://api.cryptonator.com/api/ticker/btc-usd');
 
+        // return $btcusdprice;
         // $exchnage = $total / $settings->rate;
         // $mainbal = $exchnage / $btcusdprice;
-        // $btcamt = round($mainbal,6);
+        // $btcamt = round($mainbal, 6);
 
 
         $set = Settings::where('id', 1)->first();
@@ -79,7 +80,7 @@ class HomeController extends Controller
             'quantity' => $quantity,
             'product' => $product,
             'total' => $total,
-            'btcamt' => NULL,
+            'btcamt' => null,
             'shipping' => $shipping,
             'options' => $optarray,
         ]);

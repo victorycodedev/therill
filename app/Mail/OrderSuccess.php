@@ -12,15 +12,16 @@ class OrderSuccess extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $order;
+    public $order, $admin;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Orders $order)
+    public function __construct(Orders $order, $admin = false)
     {
         $this->order = $order;
+        $this->admin = $admin;
     }
 
 

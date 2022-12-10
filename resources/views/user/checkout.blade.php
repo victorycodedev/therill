@@ -204,37 +204,45 @@
         let bank = document.querySelector('#bank');
         let pmethod = document.querySelector('#pmethod');
 
-        payondel.addEventListener('click', function() {
-            btc.classList.add('d-none');
-            general.classList.add('d-none');
-            paystack.classList.add('d-none');
-            bank.classList.add('d-none');
-            pmethod.value = "Pay on Delivery";
-            document.querySelector('#proof').removeAttribute('required');
-        });
-        bitcoin.addEventListener('click', function() {
-            btc.classList.remove('d-none');
-            general.classList.remove('d-none');
-            bank.classList.add('d-none');
-            paystack.classList.add('d-none');
-            pmethod.value = "Bitcoin";
-            document.querySelector('#proof').setAttribute('required', '');
-        });
-        banktransfer.addEventListener('click', function() {
-            btc.classList.add('d-none');
-            general.classList.remove('d-none');
-            bank.classList.remove('d-none');
-            paystack.classList.add('d-none');
-            pmethod.value = "Bank Transfer";
-            document.querySelector('#proof').setAttribute('required', '');
-        });
-        inputpaystack.addEventListener('click', function() {
-            btc.classList.add('d-none');
-            paystack.classList.remove('d-none');
-            general.classList.add('d-none');
-            bank.classList.add('d-none');
-            pmethod.value = "Paystack";
-            document.querySelector('#proof').removeAttribute('required');
-        });
+        if (payondel) {
+            payondel.addEventListener('click', function() {
+                btc.classList.add('d-none');
+                general.classList.add('d-none');
+                paystack.classList.add('d-none');
+                bank.classList.add('d-none');
+                pmethod.value = "Pay on Delivery";
+                document.querySelector('#proof').removeAttribute('required');
+            });
+        }
+        if (bitcoin) {
+            bitcoin.addEventListener('click', function() {
+                btc.classList.remove('d-none');
+                general.classList.remove('d-none');
+                bank.classList.add('d-none');
+                paystack.classList.add('d-none');
+                pmethod.value = "Bitcoin";
+                document.querySelector('#proof').setAttribute('required', '');
+            });
+        }
+        if (banktransfer) {
+            banktransfer.addEventListener('click', function() {
+                btc.classList.add('d-none');
+                general.classList.remove('d-none');
+                bank.classList.remove('d-none');
+                paystack.classList.add('d-none');
+                pmethod.value = "Bank Transfer";
+                document.querySelector('#proof').setAttribute('required', '');
+            });
+        }
+        if (inputpaystack) {
+            inputpaystack.addEventListener('click', function() {
+                btc.classList.add('d-none');
+                paystack.classList.remove('d-none');
+                general.classList.add('d-none');
+                bank.classList.add('d-none');
+                pmethod.value = "Paystack";
+                document.querySelector('#proof').removeAttribute('required');
+            });
+        }
     </script>
 @endsection

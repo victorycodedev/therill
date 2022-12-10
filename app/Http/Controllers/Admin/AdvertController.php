@@ -11,43 +11,43 @@ use App\Models\Advert;
 class AdvertController extends Controller
 {
     //
-    public function alladverts(){
+    public function alladverts()
+    {
         return view('admin.Advert.advert', [
             'adverts' => Advert::orderByDesc('id')->get(),
         ]);
     }
 
-    public function addadvert(){
-        return view('admin.Advert.addadvert', [
-            
-        ]);
+    public function addadvert()
+    {
+        return view('admin.Advert.addadvert', []);
     }
-    public function editadvert($id){
+    public function editadvert($id)
+    {
         return view('admin.Advert.edit-advert', [
             'advert' => Advert::where('id', $id)->first(),
         ]);
     }
 
-    public function deleteadvert($id){
-        $path = "/public/images/";
+    public function deleteadvert($id)
+    {
         $advert = Advert::where('id', $id)->first();
-        Storage::delete($path.$advert->image);
+        Storage::delete($advert->image);
         Advert::where('id', $id)->delete();
 
         return response()->json("Advert Deleted Successfully, refreshing page in 2 seconds");
-        //return redirect()->back()->with('success', 'Advert Deleted Successfully');
     }
 
-    public function saveadvert(Request $request){
-        $validatedData = $request->validate([
+    public function saveadvert(Request $request)
+    {
+        $request->validate([
             'image' => 'image|max:1024|mimes:png,jpg,jepg',
         ]);
 
-
-        if($request->hasFile('image')) {
+        if ($request->hasFile('image')) {
             $file = $request['image'];
-            $pixName = 'advert-'. time().'-'.$file->getClientOriginalName();
-            $file->storeAs('/public/images', $pixName);
+            // save image to database
+            $pixName = $file->store('images', 'public');
         }
 
         $advert  = new Advert();
@@ -62,19 +62,19 @@ class AdvertController extends Controller
     }
 
 
-    public function updateadvert(Request $request){
-        $validatedData = $request->validate([
+    public function updateadvert(Request $request)
+    {
+        $request->validate([
             'image' => 'image|max:1024|mimes:png,jpg,jepg',
         ]);
 
         $advert = Advert::where('id', $request['id'])->first();
 
-        if($request->hasFile('image')) {
+        if ($request->hasFile('image')) {
             $file = $request['image'];
-            $pixName = 'advert-'. time().'-'.$file->getClientOriginalName();
-            $file->storeAs('/public/images', $pixName);
-        }else {
-            $pixName=$advert->image;
+            $pixName = $file->store('images', 'public');
+        } else {
+            $pixName = $advert->image;
         }
 
         Advert::where('id', $request->id)->update([

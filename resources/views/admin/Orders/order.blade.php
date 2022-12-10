@@ -1,13 +1,13 @@
-@extends('layouts.app') 
-@section('title', 'Admin Dashboard') 
+@extends('layouts.app')
+@section('title', 'Admin Dashboard')
 @section('styles')
-@parent
- <!-- BEGIN: Vendor CSS-->
- <link rel="stylesheet" type="text/css" href="{{asset('dash/app-assets/vendors/css/vendors.min.css')}}">
- <link rel="stylesheet" type="text/css" href="{{asset('dash/app-assets/vendors/css/charts/apexcharts.css')}}">
- <link rel="stylesheet" type="text/css" href="{{asset('dash/app-assets/vendors/css/extensions/toastr.min.css')}}">
- <!-- END: Vendor CSS-->
-    
+    @parent
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('dash/app-assets/vendors/css/vendors.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('dash/app-assets/vendors/css/charts/apexcharts.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('dash/app-assets/vendors/css/extensions/toastr.min.css') }}">
+    <!-- END: Vendor CSS-->
+
 @endsection
 @include('admin.topmenu')
 @include('admin.sidebar')
@@ -33,8 +33,8 @@
                 </div>
             </div>
             <div class="content-body">
-                <x-success-message/>
-                <x-error-message/>
+                <x-success-message />
+                <x-error-message />
                 <div class="p-2 p-md-4 card">
                     <div class="row">
                         <div class="col-md-12">
@@ -45,13 +45,15 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <h5 class="text-danger">Users will get an email concerning the status of their order when you change the delivery status</h5>
+                            <h5 class="text-danger">Users will get an email concerning the status of their order when you
+                                change the delivery status</h5>
                         </div>
                         <div class="col-md-12">
                             <div class="table-responsive">
                                 <table class="table table-striped" id="datatable">
                                     <thead>
                                         <tr>
+                                            <th>Date</th>
                                             <th>Customer</th>
                                             <th>Product Name</th>
                                             <th>Product Amount</th>
@@ -66,24 +68,28 @@
                                         @foreach ($orders as $order)
                                             <tr>
                                                 <td>
-                                                    {{$order->customer->firstname . ' ' . $order->customer->lastname}}
+                                                    {{ $order->created_at->toDayDateTimeString() }}
                                                 </td>
                                                 <td>
-                                                    {{$order->product->name}}
+                                                    {{ $order->customer->firstname . ' ' . $order->customer->lastname }}
                                                 </td>
                                                 <td>
-                                                    {{$settings->currency}}{{number_format($order->product->current_price)}}
+                                                    {{ $order->product->name }}
+                                                </td>
+                                                <td>
+                                                    {{ $settings->currency }}{{ number_format($order->product->current_price) }}
                                                     {{-- {{$order->product->current_price}} --}}
                                                 </td>
                                                 <td>
-                                                    {{$settings->currency}}{{number_format($order->amount)}}
+                                                    {{ $settings->currency }}{{ number_format($order->amount) }}
                                                 </td>
                                                 <td>
-                                                    {{$order->order_status}}
+                                                    {{ $order->order_status }}
                                                 </td>
                                                 <td>
-                                                    <select id="{{$order->id}}" class="shadow form-control" onchange="changestatus(this.id, this.value)">
-                                                        <option>{{$order->deliveryStatus}}</option>
+                                                    <select id="{{ $order->id }}" class="shadow form-control"
+                                                        onchange="changestatus(this.id, this.value)">
+                                                        <option>{{ $order->deliveryStatus }}</option>
                                                         <option>Processed</option>
                                                         <option>Shipped</option>
                                                         <option>In Transit</option>
@@ -92,20 +98,25 @@
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    {{$order->quantity}}
+                                                    {{ $order->quantity }}
                                                 </td>
-                                                
-                                                <td>
-                                                    @if ($order->order_status != "Pay on Delivery")
-                                                    <a class="btn btn-success btn-sm" href=" {{route('admin.order.proof', $order->id)}}"> <i class="fa fa-eye"></i> Proof</a> &nbsp;
-                                                    @endif
-                                                    <a class="btn btn-info btn-sm" href="{{route('admin.address', ['id' => $order->customer->id, 'order' => $order->id] )}}">Shipping Address</a>
 
-                                                    <a class="btn btn-danger btn-sm" href="{{route('admin.deleteorder', ['id' => $order->id] )}}">Delete</a>
+                                                <td>
+                                                    @if ($order->order_status != 'Pay on Delivery')
+                                                        <a class="btn btn-success btn-sm"
+                                                            href=" {{ route('admin.order.proof', $order->id) }}"> <i
+                                                                class="fa fa-eye"></i> Proof</a> &nbsp;
+                                                    @endif
+                                                    <a class="btn btn-info btn-sm"
+                                                        href="{{ route('admin.address', ['id' => $order->customer->id, 'order' => $order->id]) }}">Shipping
+                                                        Address</a>
+
+                                                    <a class="btn btn-danger btn-sm"
+                                                        href="{{ route('admin.deleteorder', ['id' => $order->id]) }}">Delete</a>
                                                 </td>
-                                            </tr> 
+                                            </tr>
                                         @endforeach
-                                        
+
                                     </tbody>
                                 </table>
                             </div>
@@ -121,25 +132,27 @@
 @endsection
 @section('scripts')
     @parent
-      <!-- BEGIN: Page JS-->
-      <script src="{{asset('dash/app-assets/js/scripts/pages/dashboard-ecommerce.min.js')}}"></script>
-      <!-- END: Page JS-->
-      <!-- END: Page JS-->
-      <script>
-        function changestatus(id, order){
-          //alert(id);
-          let url = "{{url('/admin/changestatus/')}}" + '/' + id + '/' + order;
-          fetch(url)
-            .then(function(res){
-                return res.json();
-            })
-            .then(function (response){
-                Swal.fire(response, '', 'success');
-                setTimeout(() => { location.reload(); }, 2000);
-            })
-            .catch(function(err){
-                console.log(err);
-            });
+    <!-- BEGIN: Page JS-->
+    <script src="{{ asset('dash/app-assets/js/scripts/pages/dashboard-ecommerce.min.js') }}"></script>
+    <!-- END: Page JS-->
+    <!-- END: Page JS-->
+    <script>
+        function changestatus(id, order) {
+            //alert(id);
+            let url = "{{ url('/admin/changestatus/') }}" + '/' + id + '/' + order;
+            fetch(url)
+                .then(function(res) {
+                    return res.json();
+                })
+                .then(function(response) {
+                    Swal.fire(response, '', 'success');
+                    setTimeout(() => {
+                        location.reload();
+                    }, 2000);
+                })
+                .catch(function(err) {
+                    console.log(err);
+                });
         }
     </script>
 @endsection
