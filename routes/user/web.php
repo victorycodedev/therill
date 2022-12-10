@@ -1,11 +1,11 @@
 <?php
 
-use App\Http\Controllers\Controller;
 use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\AccountController;
 use App\Http\Controllers\User\BuyController;
+use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth','isuser'])->prefix('account')->name('user.')->group(function () {
+Route::middleware(['auth', 'isuser'])->prefix('account')->name('user.')->group(function () {
     Route::get('dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
     Route::get('wish-list', [HomeController::class, 'wishlist'])->name('wishlist');
     Route::get('checkout', [HomeController::class, 'checkout'])->name('checkout');
@@ -22,7 +22,6 @@ Route::middleware(['auth','isuser'])->prefix('account')->name('user.')->group(fu
     Route::post('submitorder', [BuyController::class, 'submitorder'])->name('submitorder');
     Route::get('deleteorder/{id}', [BuyController::class, 'deleteorder'])->name('deleteorder');
 
-    Route::post('pay',[BuyController::class, 'redirectToGateway'])->name('pay.paystack');
-	
+    Route::post('pay', [BuyController::class, 'redirectToGateway'])->name('pay.paystack');
 });
-Route::get('dashboard/paystackcallback',[BuyController::class, 'handleGatewayCallback'])->middleware('auth');
+Route::get('dashboard/paystackcallback', [BuyController::class, 'handleGatewayCallback'])->middleware('auth');

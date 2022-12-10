@@ -17,33 +17,36 @@ class HomeController extends Controller
 {
     //
 
-    public function dashboard(){
+    public function dashboard()
+    {
         $shipping_address = ShippingAddress::where('id', Auth::user()->id)->first();
-        
+
         if (!$shipping_address) {
-           $adship = new ShippingAddress();
-           $adship->user_id = Auth::user()->id;
-           $adship->save();
-           $shipping_address = ShippingAddress::where('id', Auth::user()->id)->first();
+            $adship = new ShippingAddress();
+            $adship->user_id = Auth::user()->id;
+            $adship->save();
+            $shipping_address = ShippingAddress::where('id', Auth::user()->id)->first();
         }
 
         $order = Orders::where('user_id', Auth::user()->id)->get();
 
-        return view('user.dashboard',[
+        return view('user.dashboard', [
             'shipping_address' => $shipping_address,
-            'orders'=> $order,
+            'orders' => $order,
         ]);
     }
 
-    public function wishlist(){
+    public function wishlist()
+    {
         $wishlist = Wishlist::where('user_id', Auth::user()->id)->get();
 
-        return view('user.wishlist',[
+        return view('user.wishlist', [
             'wishlist' => $wishlist,
         ]);
     }
 
-    public function checkout(Request $request){
+    public function checkout(Request $request)
+    {
         if (!$request->session()->exists('quantity')) {
             return redirect()->back();
         }
@@ -54,8 +57,8 @@ class HomeController extends Controller
         $amount = $product->current_price * $quantity;
 
         if ($settings->ship_type == "Percentage") {
-            $shipping = $amount * $settings->ship_fee/100;
-        }else {
+            $shipping = $amount * $settings->ship_fee / 100;
+        } else {
             $shipping = $settings->ship_fee;
         }
 
@@ -67,18 +70,18 @@ class HomeController extends Controller
         // $btcamt = round($mainbal,6);
 
 
-        $set = Settings::where('id',1)->first();
+        $set = Settings::where('id', 1)->first();
         $options = $set->payment_mode;
         $optarray = json_decode($options);
 
-        return view('user.checkout',[
-            'amount'=> $amount,
+        return view('user.checkout', [
+            'amount' => $amount,
             'quantity' => $quantity,
             'product' => $product,
             'total' => $total,
             'btcamt' => NULL,
             'shipping' => $shipping,
-            'options' =>$optarray,
+            'options' => $optarray,
         ]);
     }
 }

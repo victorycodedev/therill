@@ -19,77 +19,79 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function index(){
+    public function index()
+    {
         if (Auth::user()->isadmin) {
-           return redirect()->route('admin.dashboard');
-        }else {
+            return redirect()->route('admin.dashboard');
+        } else {
             return redirect()->route('user.dashboard');
         }
     }
 
-    public function home(){
+    public function home()
+    {
         $featured = DB::table('products')
-                    ->where('type', 'Featured Products')
-                    ->where('status', 'Publish')
-                    ->where('category', '!=', 'Adult and More')
-                    ->offset(0)
-                    ->limit(10)
-                    ->get();
+            ->where('type', 'Featured Products')
+            ->where('status', 'Publish')
+            ->where('category', '!=', 'Adult and More')
+            ->offset(0)
+            ->limit(10)
+            ->get();
 
         $arrivals = DB::table('products')
-                    ->where('type', 'New Arrivals')
-                    ->where('status', 'Publish')
-                    ->where('category', '!=', 'Adult and More')
-                    ->offset(0)
-                    ->limit(10)
-                    ->get();
+            ->where('type', 'New Arrivals')
+            ->where('status', 'Publish')
+            ->where('category', '!=', 'Adult and More')
+            ->offset(0)
+            ->limit(10)
+            ->get();
 
         $best = DB::table('products')
-                    ->where('type', 'Best Selling')
-                    ->where('status', 'Publish')
-                    ->offset(0)
-                    ->limit(10)
-                    ->get();
+            ->where('type', 'Best Selling')
+            ->where('status', 'Publish')
+            ->offset(0)
+            ->limit(10)
+            ->get();
 
         $latest = DB::table('products')
-                    ->where('type', 'Latest Product')
-                    ->where('status', 'Publish')
-                    ->offset(0)
-                    ->limit(10)
-                    ->get();
+            ->where('type', 'Latest Product')
+            ->where('status', 'Publish')
+            ->offset(0)
+            ->limit(10)
+            ->get();
         $adrvert = DB::table('adverts')
             ->where('status', 'Publish')
-                ->offset(0)
-                    ->limit(2)
-                    ->get();
+            ->offset(0)
+            ->limit(2)
+            ->get();
 
-
-        return view('home.welcome',[
+        return view('home.welcome', [
             'featured' => $featured,
-            'arrivals' =>$arrivals,
+            'arrivals' => $arrivals,
             'best' => $best,
             'latest' => $latest,
             'adverts' => $adrvert,
         ]);
     }
 
-    public function products(Request $request, $cat, $brand, $sort, $page, $query){
-        //return $name = $request->input('cat');
+    public function products($cat, $brand, $sort, $page, $query)
+    {
+
         $adrvert = DB::table('adverts')
-        ->where('status', 'Publish')
+            ->where('status', 'Publish')
             ->offset(0)
             ->orderByDesc('id')
-                ->limit(1)
-                ->get();
+            ->limit(1)
+            ->get();
         $brands = Brand::orderByDesc('id')->where('status', 'enabled')->get();
         $categories = Category::orderByDesc('id')->where('status', 'enabled')->get();
 
         $featured = DB::table('products')
-        ->where('type', 'Featured Products')
-        ->where('status', 'Publish')
-        ->offset(0)
-        ->limit(3)
-        ->get();
+            ->where('type', 'Featured Products')
+            ->where('status', 'Publish')
+            ->offset(0)
+            ->limit(3)
+            ->get();
 
         if ($cat == 'all' and $brand == 'all' and $query == 'query') {
             $products = DB::table('products')
@@ -101,7 +103,7 @@ class Controller extends BaseController
                 // ->where('name', 'like', '%'.$query.'%')
                 // ->orWhere('description', 'like', '%'.$query.'%')
                 ->paginate($page);
-        }elseif ($cat != 'all') {
+        } elseif ($cat != 'all') {
             $products = DB::table('products')
                 ->orderBy('id', $sort)
                 ->where('status', 'Publish')
@@ -110,31 +112,31 @@ class Controller extends BaseController
                 // ->where('name', 'like', '%'.$query.'%')
                 // ->orWhere('description', 'like', '%'.$query.'%')
                 ->paginate($page);
-        }elseif ($brand != 'all') {
+        } elseif ($brand != 'all') {
             $products = DB::table('products')
                 ->orderBy('id', $sort)
                 ->where('status', 'Publish')
                 //->where('category', $cat)
-                 ->where('brand', $brand)
+                ->where('brand', $brand)
                 // ->where('name', 'like', '%'.$query.'%')
                 // ->orWhere('description', 'like', '%'.$query.'%')
                 ->paginate($page);
-        }elseif ($query != 'query') {
+        } elseif ($query != 'query') {
             $products = DB::table('products')
                 ->orderBy('id', $sort)
                 ->where('status', 'Publish')
                 //->where('category', $cat)
                 // ->where('brand', $brand)
-                ->where('name', 'like', '%'.$query.'%')
-                ->orWhere('description', 'like', '%'.$query.'%')
+                ->where('name', 'like', '%' . $query . '%')
+                ->orWhere('description', 'like', '%' . $query . '%')
                 ->paginate($page);
         }
-        
 
-        
-        return view('home.products',[
+
+
+        return view('home.products', [
             'brands' => $brands,
-            'categories'=> $categories,
+            'categories' => $categories,
             'featured' => $featured,
             'products' => $products,
             'offers' => $adrvert,
@@ -142,19 +144,19 @@ class Controller extends BaseController
     }
 
 
-    public function offers($title){
+    public function offers($title)
+    {
         $slugs = explode("-", str_replace('-', ' ', $title));
         $advert = Advert::where('title', $slugs)->first();
         return view('home.offers', [
-            'offer'=> $advert,
+            'offer' => $advert,
         ]);
     }
 
-    public function aboutus(){
-        
-        return view('home.aboutus', [
-            
-        ]);
+    public function aboutus()
+    {
+
+        return view('home.aboutus', []);
     }
 
 
@@ -192,7 +194,8 @@ class Controller extends BaseController
 
 
 
-    public function fetch_data(Request $request){
+    public function fetch_data(Request $request)
+    {
         $sort_by = $request->get('sortby');
         $sort_type = $request->get('sorttype');
         $query = $request->get('query');
@@ -202,18 +205,19 @@ class Controller extends BaseController
 
         $query = str_replace(" ", "%", $query);
         $products = DB::table('products')
-                    ->where('name', 'like', '%'.$query.'%')
-                    ->orWhere('description', 'like', '%'.$query.'%')
-                    ->orWhere('category', $category)
-                    ->orWhere('brand', $brand)
-                    ->orderBy('id', $sort_type)
-                    ->paginate(10);
+            ->where('name', 'like', '%' . $query . '%')
+            ->orWhere('description', 'like', '%' . $query . '%')
+            ->orWhere('category', $category)
+            ->orWhere('brand', $brand)
+            ->orderBy('id', $sort_type)
+            ->paginate(10);
         return view('home.productdata', [
             'products' => $products,
         ])->render();
     }
 
-    public function productsingle($id){
+    public function productsingle($id)
+    {
         $slugs = explode("-", str_replace('-', ' ', $id));
         $product = Products::where('name', $slugs)->first();
         $images = $product->productImage;
@@ -225,16 +229,15 @@ class Controller extends BaseController
             ->offset(0)
             ->limit(8)
             ->get();
-        return view('home.productsingle',[
-            'product'=>$product,
+        return view('home.productsingle', [
+            'product' => $product,
             'images' => $images,
-            'related'=> $related,
-        ]); 
+            'related' => $related,
+        ]);
     }
 
-    public function contact(){
-        return view('home.contactus',[
-
-        ]);
+    public function contact()
+    {
+        return view('home.contactus', []);
     }
 }

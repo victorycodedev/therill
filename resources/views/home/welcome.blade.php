@@ -13,8 +13,8 @@
 }">
         @foreach ($adverts as $offer)
             <div class="home-slide home-slide1 banner">
-                <img class="slide-bg" src="{{ asset('storage/app/public/images/' . $offer->image) }}" width="1903"
-                    height="499" alt="slider image">
+                <img class="slide-bg" src="{{ asset('storage/' . $offer->image) }}" width="1903" height="499"
+                    alt="slider image">
                 <div class="container d-flex align-items-center">
                     <div class="banner-layer appear-animate" data-animation-name="fadeInUpShorter">
                         <h4 class="text-transform-none m-b-3">{{ $offer->category }}</h4>
@@ -94,10 +94,10 @@
                         <div class="product-default appear-animate" data-animation-name="fadeInRightShorter">
                             <figure>
                                 <a href="{{ route('productsingle', str_replace(' ', '-', $feat->name)) }}">
-                                    <img src="{{ asset('storage/app/public/images/' . $feat->featured_image) }}"
-                                        width="280" height="280" alt="product">
-                                    <img src="{{ asset('storage/app/public/images/' . $feat->featured_image) }}"
-                                        width="280" height="280" alt="product">
+                                    <img src="{{ asset('storage/' . $feat->featured_image) }}" width="280" height="280"
+                                        alt="product">
+                                    <img src="{{ asset('storage/' . $feat->featured_image) }}" width="280" height="280"
+                                        alt="product">
                                 </a>
                                 <div class="label-group">
                                     @if (!empty($feat->tag))
@@ -167,10 +167,10 @@
                         <div class="product-default appear-animate" data-animation-name="fadeInRightShorter">
                             <figure>
                                 <a href="{{ route('productsingle', str_replace(' ', '-', $arrive->name)) }}">
-                                    <img src="{{ asset('storage/app/public/images/' . $arrive->featured_image) }}"
-                                        width="220" height="220" alt="product">
-                                    <img src="{{ asset('storage/app/public/images/' . $arrive->featured_image) }}"
-                                        width="220" height="220" alt="product">
+                                    <img src="{{ asset('storage/' . $arrive->featured_image) }}" width="220"
+                                        height="220" alt="product">
+                                    <img src="{{ asset('storage/' . $arrive->featured_image) }}" width="220"
+                                        height="220" alt="product">
                                 </a>
                                 <!--<div class="label-group">-->
                                 <!--    <div class="product-label label-hot">HOT</div>-->

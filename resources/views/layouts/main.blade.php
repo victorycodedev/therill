@@ -11,6 +11,7 @@
     <!-- Favicon -->
     <link rel="apple-touch-icon" href="{{ asset('app/images/logos.png') }}">
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('app/images/logos.png') }}">
+    <script defer src="https://unpkg.com/alpinejs@3.10.5/dist/cdn.min.js"></script>
     @section('styles')
         <script>
             WebFontConfig = {
@@ -31,22 +32,9 @@
         @livewireStyles
         <!-- Plugins CSS File -->
         <link rel="stylesheet" href="{{ asset('app/css/bootstrap.min.css') }}">
-
         <link rel="stylesheet" type="text/css" href="{{ asset('app/vendor/fontawesome-free/css/all.min.css') }}">
     @show
 
-    <!-- Google tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-237396082-1"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
-
-        gtag('config', 'UA-237396082-1');
-    </script>
 </head>
 
 <body>
@@ -79,14 +67,9 @@
                                     @auth
                                         <li><a href="{{ route('dashboard') }}">{{ Auth::user()->firstname }}</a></li>
                                     @endauth
-                                    {{-- <li><a href="about.html">About Us</a></li>
-                                    <li><a href="blog.html">Blog</a></li>
-                                    <li><a href="wishlist.html">My Wishlist</a></li>
-                                    <li><a href="cart.html">Cart</a></li> --}}
                                     @guest
                                         <li><a href="{{ route('login') }}">Log In</a></li>
                                     @endguest
-
                                 </ul>
                             </div>
                             <!-- End .header-menu -->
@@ -319,10 +302,6 @@
                         <li><a href="{{ route('dashboard') }}">{{ Auth::user()->firstname }}</a></li>
                     @endauth
                     <li><a href="{{ route('user.wishlist') }}">My Wishlist</a></li>
-                    {{-- <li><a href="{{route('aboutus')}}">About Us</a></li> --}}
-                    {{-- <li><a href="blog.html">Blog</a></li>
-                    
-                    <li><a href="cart.html">Cart</a></li> --}}
                     @guest
                         <li><a href="{{ route('login') }}">Log In</a></li>
                     @endguest
@@ -372,13 +351,13 @@
                 <i class="icon-user-2"></i>Account
             </a>
         </div>
-        {{-- <div class="sticky-info">
+        <div class="sticky-info">
             <a href="cart.html" class="">
                 <i class="icon-shopping-cart position-relative">
-					<span class="cart-count badge-circle">3</span>
-				</i>Cart
+                    <span class="cart-count badge-circle">3</span>
+                </i>Cart
             </a>
-        </div> --}}
+        </div>
     </div>
 
     {{-- <div class="newsletter-popup mfp-hide bg-img" id="newsletter-popup-form" style="background: #f1f1f1 no-repeat center/cover url(app/images/newsletter_popup_bg.jpg)">
