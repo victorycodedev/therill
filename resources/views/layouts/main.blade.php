@@ -351,13 +351,26 @@
                 <i class="icon-user-2"></i>Account
             </a>
         </div>
-        <div class="sticky-info">
-            <a href="cart.html" class="">
-                <i class="icon-shopping-cart position-relative">
-                    <span class="cart-count badge-circle">3</span>
-                </i>Cart
-            </a>
-        </div>
+
+        @auth
+            <div class="sticky-info">
+                <a href="{{ route('dashboard') }}" class="">
+                    <i class="icon-shopping-cart position-relative">
+                        <span class="cart-count badge-circle">{{ count(Auth::user()->orders) }}</span>
+                    </i>Orders
+                </a>
+            </div>
+        @endauth
+        @guest
+            <div class="sticky-info">
+                <a href="{{ route('dashboard') }}" class="">
+                    <i class="icon-shopping-cart position-relative">
+                        <span class="cart-count badge-circle">0</span>
+                    </i>Orders
+                </a>
+            </div>
+        @endguest
+
     </div>
 
     {{-- <div class="newsletter-popup mfp-hide bg-img" id="newsletter-popup-form" style="background: #f1f1f1 no-repeat center/cover url(app/images/newsletter_popup_bg.jpg)">

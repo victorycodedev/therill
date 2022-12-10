@@ -16,7 +16,11 @@
 
         <div class="row">
             <div class="col-lg-9">
-                <div class="boxed-slider owl-carousel owl-carousel-lazy owl-theme owl-theme-light">
+                <div class="boxed-slider owl-carousel owl-carousel-lazy owl-theme owl-theme-light"
+                    data-owl-options="{
+                    'autoplay': true,
+                    'autoplayTimeout': 5000
+                }">
                     @foreach ($offers as $offer)
                         <div class="boxed-slide boxed-slide-1">
                             <figure>
@@ -31,8 +35,6 @@
                             </div>
                         </div>
                     @endforeach
-
-
                 </div>
 
                 <nav class="mt-2 toolbox sticky-header" data-sticky-options="{'mobile': true}">

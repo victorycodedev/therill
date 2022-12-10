@@ -7,11 +7,14 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endsection
 @section('content')
-    <div class="mb-2 home-slider slide-animate owl-carousel owl-theme show-nav-hover nav-big text-uppercase"
-        data-owl-options="{
-    'loop': true
-}">
-        @foreach ($adverts as $offer)
+    @foreach ($adverts as $offer)
+        <div class="mb-2 home-slider slide-animate owl-carousel owl-theme show-nav-hover nav-big text-uppercase"
+            data-owl-options="{
+        'autoplay': true,
+        'loop': true,
+        'autoplayTimeout': 5000
+    }">
+
             <div class="home-slide home-slide1 banner">
                 <img class="slide-bg" src="{{ asset('storage/' . $offer->image) }}" width="1903" height="499"
                     alt="slider image">
@@ -27,10 +30,10 @@
                 </div>
             </div>
             <!-- End .home-slide -->
-        @endforeach
-    </div>
-    <!-- End .home-slider -->
 
+        </div>
+        <!-- End .home-slider -->
+    @endforeach
     <div class="container">
         <div class="mb-2 info-boxes-slider owl-carousel owl-theme"
             data-owl-options="{
@@ -122,7 +125,7 @@
                                     <span
                                         class="product-price">{{ $settings->currency }}{{ number_format($feat->current_price) }}</span>
                                 </div>
-                                <div>
+                                <div class="text-center">
                                     {{-- <p>
                                         {{ mb_strimwidth($feat->info, 0, 50, '...') }}
                                     </p> --}}
@@ -189,7 +192,7 @@
                                     <a
                                         href="{{ route('productsingle', str_replace(' ', '-', $arrive->name)) }}">{{ $arrive->name }}</a>
                                 </h5>
-                                <div>
+                                <div class="text-center">
                                     {{-- <p>
                                         {{ mb_strimwidth($arrive->info, 0, 50, '...') }}
                                     </p> --}}

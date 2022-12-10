@@ -35,7 +35,7 @@
                             class="product-price">{{ $settings->currency }}{{ number_format($feat->current_price) }}</span>
                     </div>
                     <!-- End .price-box -->
-                    <div>
+                    <div class="text-center">
                         {{-- <p>
                             {{ mb_strimwidth($arrive->info, 0, 50, '...') }}
                         </p> --}}

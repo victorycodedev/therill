@@ -44,4 +44,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'isadmin' => 'boolean',
     ];
+
+    // user have many orders
+    public function orders()
+    {
+        return $this->hasMany(Orders::class);
+    }
+
+    public function activeOrders()
+    {
+        return $this->hasMany(Orders::class)->where('deliveryStatus', '==', 'completed');
+    }
 }
