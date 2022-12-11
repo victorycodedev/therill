@@ -78,8 +78,6 @@ class BuyController extends Controller
         ]);
 
         Mail::to(Auth::user()->email)->cc($settings->contact_email)->send(new OrderSuccess($order));
-        //Mail::to($settings->contact_email)->send(new OrderSuccess($order, true));
-
 
         $request->session()->forget(['quantity', 'product']);
         return redirect()->route('user.dashboard')->with('success', 'Order placed successfully, your order will be confirmed once we confirm your payment.');
